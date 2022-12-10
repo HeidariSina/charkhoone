@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cmds",
+  "info": {
+    "singularName": "cmd",
+    "pluralName": "cmds",
+    "displayName": "companyMainData",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "mainData": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+FROM node:16.14.0-buster-slim
+
+ENV PORT 1338
+# Set up the working directory that will be used to copy files/directories below :
+RUN mkdir -p /usr/src/app/backend/
+WORKDIR /usr/src/app/backend
+
+# Installing dependencies
+COPY package*.json /usr/src/app/backend/
+WORKDIR /usr/src/app/backend
+RUN npm install
+
+COPY . .
+# RUN npm run develop
+
+EXPOSE 1338
+
+CMD ["npm","run","dev"]

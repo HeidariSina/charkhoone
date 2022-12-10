@@ -1,0 +1,19 @@
+.tr {
+    height: 3rem;
+}
+.table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 90%;
+}
+.main {
+    background-color: rgba(40, 40, 40, 0.9);
+    width: 100%;
+    border-top: thin solid;
+    border-bottom: thin solid;
+    border-radius: 3rem;
+    margin-bottom: 2rem;
+}
+.td{
+    text-align: center;
+}

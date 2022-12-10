@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bestlimitsg1s",
+  "info": {
+    "singularName": "bestlimitsg1",
+    "pluralName": "bestlimitsg1s",
+    "displayName": "bestlimitsg1"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data": {
+      "type": "json"
+    }
+  }
+}

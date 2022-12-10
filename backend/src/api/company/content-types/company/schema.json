@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "companies",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "company",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "fullname": {
+      "type": "string"
+    },
+    "group": {
+      "type": "string"
+    },
+    "inscode": {
+      "type": "biginteger"
+    },
+    "maxprice": {
+      "type": "biginteger"
+    },
+    "minprice": {
+      "type": "biginteger"
+    },
+    "price": {
+      "type": "biginteger"
+    },
+    "changeprice": {
+      "type": "biginteger"
+    },
+    "priceYesterday": {
+      "type": "biginteger"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.text
+{
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1.3rem;
+}
+.g1{
+    width: 45%;
+}
+.head{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.g2{
+    width: 45%;
+}
+.a
+{
+    font-size: 0.9rem;
+}
+@media screen and (max-width: 1200px) {
+    .g1{width: 70%;}
+    .g2{width: 70%; margin: 2rem 0;}
+  }
+@media screen and (max-width: 900px) {
+    .g1{width: 95%;}
+    .g2{width: 95%;}
+  }

@@ -1,0 +1,27 @@
+.main {
+  background-color: rgba(40, 40, 40, 0.9);
+  width: 100%;
+  border-top: thin solid;
+  border-bottom: thin solid;
+  border-radius: 4.5rem;
+}
+.head {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+.table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  height: 40rem;
+  width: 90%;
+}
+.tr {
+  border-top: solid thin;
+}
+.th {
+  text-align: left;
+}
+.td {
+  text-align: right;
+}

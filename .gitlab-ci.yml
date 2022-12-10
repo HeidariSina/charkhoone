@@ -1,0 +1,14 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  before_script:
+    - pwd
+    - chmod +x ./deploy.sh
+  script:
+    - ./deploy.sh
+  only:
+    - main
+  tags:
+    - shell_executor

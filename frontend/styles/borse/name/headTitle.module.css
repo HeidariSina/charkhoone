@@ -1,0 +1,32 @@
+.main
+{
+    text-align: center;
+    height: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-top: 0.1rem solid white;
+    border-bottom: 0.1rem solid white;
+    border-radius: 50rem;
+    width: 50%;
+    margin : 2rem auto;
+}
+.head
+{
+    font-size: 2rem;
+}
+@media screen and (max-width: 1400px) {
+    .main {
+      width: 60%;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .main {
+      width: 70%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .main {
+      width: 80%;
+    }
+}

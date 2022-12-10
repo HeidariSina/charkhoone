@@ -1,0 +1,52 @@
+version: "3.5"
+
+services:
+  # nextjs:
+  #   ports:
+  #     - 3000:80
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./packages/landingpage:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #     - /usr/src/app/.next
+  #   depends_on:
+  #     - backend
+
+  backend:
+    depends_on:
+      - db
+    image: strapi/strapi
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_NAME: strapi
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: amirkabir@ut
+    volumes:
+      - ./app:/srv/app
+    ports:
+      - '1338:1338'
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    
+  db:
+    restart: always
+    container_name: DB
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: amirkabir@ut
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  # nodej:
+  #   build:
+  #     context: ./node
+  #     dockerfile: Dockerfile

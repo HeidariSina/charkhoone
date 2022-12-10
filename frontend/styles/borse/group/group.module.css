@@ -1,0 +1,12 @@
+.cards
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin : 2rem 0;
+}
+.text {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 2.2rem;
+    font-style: italic;
+}

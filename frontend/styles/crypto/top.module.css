@@ -1,0 +1,49 @@
+.name {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+  margin-top: 1rem;
+}
+.img {
+  width: 2rem;
+  height: 2rem;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.table {
+  min-width: 20rem;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.05rem;
+  width: 20%;
+  line-height: 2rem;
+  height: 10rem;
+  border-collapse: collapse;
+}
+.tr {
+  border-bottom: solid thin;
+}
+.tables {
+  height: 15rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.p {
+  margin-left: 0.2rem;
+}
+@media screen and (max-width: 800px) {
+  .tables {
+    flex-direction: column;
+    height: 25rem;
+  }
+  .table {
+    margin-top: 2rem;
+  }
+}

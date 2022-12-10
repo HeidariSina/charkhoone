@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "firstpages",
+  "info": {
+    "singularName": "firstpage",
+    "pluralName": "firstpages",
+    "displayName": "firstpage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data": {
+      "type": "json"
+    }
+  }
+}

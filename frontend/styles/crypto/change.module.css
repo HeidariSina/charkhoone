@@ -1,0 +1,24 @@
+.head {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+.table {
+  min-width: 20rem;
+  margin: 1.5rem auto 3rem auto;
+  text-align: center;
+  font-size: 1.05rem;
+  width: 80%;
+  height: 6rem;
+  border-top: thin solid;
+  border-bottom: thin solid;
+  border-radius: 1.5rem;
+}
+.td {
+  width: 16.66%;
+}
+@media screen and (max-width: 800px) {
+  .table {
+    width: 95%;
+  }
+}

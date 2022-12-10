@@ -1,0 +1,28 @@
+.card {
+  min-width: 30rem;
+  border: 1px solid white;
+  color: white;
+  border-radius: 3rem;
+  overflow: hidden;
+  transition: 0.5s ease-in-out;
+}
+.main {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  justify-content: space-evenly;
+  background-color: rgba(10, 10, 10, 0.925);
+  text-align: center;
+}
+.img {
+  width: 30rem;
+  height: 18rem;
+}
+.p {
+  font-size: 1.5rem;
+  margin: 2rem 0;
+}
+.card:hover {
+  transform: scale(1.15);
+}

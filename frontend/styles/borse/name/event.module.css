@@ -1,0 +1,78 @@
+.main
+{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+}
+.sec{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 67%;
+}
+.thr
+{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+}
+.p{
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+  margin-top: -2rem;
+  margin-bottom: 0.5rem;
+}
+.fo
+{
+  margin: auto 0;
+}
+.chs{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+.ch
+{
+  width: 46%;
+  height: 60vh;
+}
+.ch1
+{
+  width: 45%;
+  height: 40vh;
+}
+.ch2
+{
+  width: 37%;
+  height: 40vh;
+
+}
+.buy{width: 45%;}
+.table{width: 49%;}
+.mainInfo{width: 28%;}
+@media screen and (max-width: 1000px) {
+  .thr
+    {
+      flex-direction: column;
+      align-items: center;
+    }
+  .buy{width: 80%;}
+  .table{width: 80%;}
+  .ch1{width: 80%;}
+  .ch2{width: 80%;}
+  .main{flex-direction: column-reverse;
+  align-items: center;}
+    .sec {width: 90%;
+    align-items: center;}
+    .mainInfo{width: 60%;}
+  .chs{flex-direction: column;}
+  .ch{width: 80%;
+  margin: 2rem auto;}
+}
+
+@media screen and (max-width: 550px) {    .mainInfo{width: 80%;}
+}

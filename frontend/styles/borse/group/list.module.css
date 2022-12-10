@@ -1,0 +1,66 @@
+.main {
+  background-color: rgba(40, 40, 40, 0.9);
+  width: 98%;
+  border-top: thin solid;
+  border-bottom: thin solid;
+  border-radius: 3rem;
+  margin: 2rem auto;
+}
+.div
+{
+  display: flex;
+  justify-content: center;
+  margin: auto 0;
+}
+.icon{
+  font-size: 2rem;
+  margin: auto 1rem auto 0;
+}
+.p
+{
+  font-size: 2rem;
+}
+.pag {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.05rem;
+    width: 95%;
+    line-height: 2rem;
+    border-collapse: collapse;
+    
+}
+.trr {
+    border-top: solid thin;
+    height: 
+    4rem;
+}
+.scd {
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+.header {
+    font-size: 1.5rem;
+    margin: 1.5rem auto;
+    text-align: center;
+    font-style: italic;
+}
+.th
+{
+  text-align: right;
+}
+@media screen and (max-width: 1250px) {
+    .hiddenfirst {
+      display: none;
+    }
+  }
+@media screen and (max-width: 1000px) {
+    .hiddenscd {
+      display: none;
+    }
+    .header {
+      font-size: 1.5rem;
+    }
+  }
+  

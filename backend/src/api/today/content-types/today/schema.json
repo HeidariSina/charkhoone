@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "todays",
+  "info": {
+    "singularName": "today",
+    "pluralName": "todays",
+    "displayName": "today",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "M": {
+      "type": "string"
+    },
+    "D": {
+      "type": "string"
+    },
+    "Y": {
+      "type": "string"
+    }
+  }
+}
