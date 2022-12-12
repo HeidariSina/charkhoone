@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * firstpage router.
+ * firstpage router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;

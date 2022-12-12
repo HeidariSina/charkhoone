@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "maindatas",
+  "info": {
+    "singularName": "maindata",
+    "pluralName": "maindatas",
+    "displayName": "Maindata"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}

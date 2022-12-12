@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- *  bestlimitsg1 controller
+ * bestlimitsg1 controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;

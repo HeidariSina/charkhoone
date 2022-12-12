@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * firstpage service.
+ * firstpage service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;

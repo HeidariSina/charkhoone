@@ -4,8 +4,7 @@
   "info": {
     "singularName": "group",
     "pluralName": "groups",
-    "displayName": "group",
-    "description": ""
+    "displayName": "group"
   },
   "options": {
     "draftAndPublish": true

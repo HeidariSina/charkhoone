@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * bestlimitsg2 service.
+ * bestlimitsg2 service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;

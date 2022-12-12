@@ -5,8 +5,8 @@ const nextConfig = {
     outputStandalone: true,
   },
   env: {
-    API_URL: `http://127.0.0.1:1338`,
-    SOLO_URL: `http://127.0.0.1:3000`,
+    API_URL: `http://37.32.26.91:1338`,
+    SOLO_URL: `http://37.32.26.91:3000`,
   },
 };
 

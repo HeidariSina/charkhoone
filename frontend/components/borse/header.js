@@ -12,13 +12,7 @@ export default function header() {
           <p className={style.text}>صفحه اصلی</p>
         </div>
       </Link>
-      <Link href={"/borse"}>
-        <div className={style.back}>
-          <FaCoins />
-          <p className={style.text}>صفحه بورس</p>
-        </div>
-      </Link>
-      <Link href={"/borse/group"}>
+      <Link href={"/group"}>
         <div className={style.back}>
           <FaLayerGroup />
           <p className={style.text}>صفحه گروه ها</p>

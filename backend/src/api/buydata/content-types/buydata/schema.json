@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "buydatas",
+  "info": {
+    "singularName": "buydata",
+    "pluralName": "buydatas",
+    "displayName": "buydata"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}

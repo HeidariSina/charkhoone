@@ -56,7 +56,7 @@ function makeTable(index, len, el, mobadel) {
           {" " + mobadel(el[index].pClosing)}
         </td>
         <td className={style.right}>
-          <Link href={`/borse/${el[index].instrument.insCode}`}>
+          <Link href={`/${el[index].instrument.insCode}`}>
             {"(" +
               el[index].instrument.lVal18AFC +
               ")" +

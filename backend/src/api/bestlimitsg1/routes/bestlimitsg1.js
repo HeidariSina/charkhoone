@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * bestlimitsg1 router.
+ * bestlimitsg1 router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;

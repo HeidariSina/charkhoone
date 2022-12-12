@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mainstates",
+  "info": {
+    "singularName": "mainstate",
+    "pluralName": "mainstates",
+    "displayName": "mainstate"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}

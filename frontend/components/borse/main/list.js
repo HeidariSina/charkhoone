@@ -53,7 +53,7 @@ export default function list({ data, title }) {
                   {" " + mobadel(el.pClosing)}
                 </td>
                 <td className={style.right}>
-                  <Link href={`/borse/${el.instrument.insCode}`}>
+                  <Link href={`/${el.instrument.insCode}`}>
                     {"(" +
                       el.instrument.lVal18AFC +
                       ")" +

@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "statedatas",
+  "info": {
+    "singularName": "statedata",
+    "pluralName": "statedatas",
+    "displayName": "stateData"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data": {
+      "type": "json"
+    },
+    "inscode": {
+      "type": "biginteger"
+    }
+  }
+}

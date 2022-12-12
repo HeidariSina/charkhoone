@@ -4,8 +4,7 @@
   "info": {
     "singularName": "company",
     "pluralName": "companies",
-    "displayName": "company",
-    "description": ""
+    "displayName": "company"
   },
   "options": {
     "draftAndPublish": true

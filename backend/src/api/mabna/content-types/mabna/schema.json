@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mabnas",
+  "info": {
+    "singularName": "mabna",
+    "pluralName": "mabnas",
+    "displayName": "Mabna"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}

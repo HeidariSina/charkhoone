@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tabledatas",
+  "info": {
+    "singularName": "tabledata",
+    "pluralName": "tabledatas",
+    "displayName": "tabledata"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}

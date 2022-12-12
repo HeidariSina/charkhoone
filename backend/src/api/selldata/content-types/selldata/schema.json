@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "selldatas",
+  "info": {
+    "singularName": "selldata",
+    "pluralName": "selldatas",
+    "displayName": "selldata"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "inscode": {
+      "type": "biginteger"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}
