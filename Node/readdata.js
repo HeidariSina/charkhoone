@@ -313,25 +313,24 @@ async function getAllBuyDatas(source)
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
   for (let dat of source) {
-    await sleep(50);
+    await sleep(100);
     getBuyData(dat.attributes.inscode);
   }
 }
 //get buy data 
 async function getBuyData(code){
   let webdata = {};
+  let buy ;
   try
   {
   const resweb = await fetch(
     `http://cdn.tsetmc.com/api/ClientType/GetClientType/${code}/1/0`
   );
-  if (resweb.status == 200) {
-    webdata = await resweb.json();
-  }
   const res = await fetch(`${API_URL}/buydatas?filters[inscode]=${code}`);
-  if(res.status == 200)
+  const DB = await res.json();
+  if(resweb.status == 200)
   {
-    const DB = await res.json();
+  webdata = await resweb.json();
   let buyjs = webdata.clientType;
   let buy = {
     sellIVolume: Object.keys(buyjs).length === 0 ? "" : buyjs.sell_I_Volume,
@@ -343,6 +342,18 @@ async function getBuyData(code){
     buyNVolume: Object.keys(buyjs).length === 0 ? "" : buyjs.buy_N_Volume,
     buyNCount: Object.keys(buyjs).length === 0 ? "" : buyjs.sell_CountN,
   };
+  }else
+  {
+    let buy = {
+      sellIVolume: "",
+      sellICount: "",
+      buyIVolume: "",
+      buyICount: "",
+      sellNVolume: "",
+      sellNCount: "",
+      buyNVolume:"" ,
+      buyNCount: "" ,
+    };
   }
   
   let body = {
@@ -507,7 +518,7 @@ async function getAllStateDatas(source)
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
   for (let dat of source) {
-    await sleep(2000);
+    await sleep(2100);
     getStateData(dat.attributes.inscode);
   }
 }
@@ -522,6 +533,7 @@ async function getStateData(code){
   webdata = await resweb.json();
   const res = await fetch(`${API_URL}/statedatas?filters[inscode]=${code}`);
   const DB = await res.json();
+  let temp=[];
   let data = webdata.closingPriceDaily;
   for (let i of data) {
         temp.push({
@@ -559,6 +571,7 @@ async function getStateData(code){
     });
   }}catch (error) {
     console.log(`Cant fetch ${code}`);
+    console.log(`Cant fetch ${error}`);
     setTimeout(() => {
       getStateData(code);
     }, 300);
@@ -655,8 +668,7 @@ async function getMainStateData(code){
   let data = webdata.trade;
   let da = []
   data.reverse();
-  data.map((el, index) => {
-    if (index % 30 == 0)
+  data.map((el) => {
       da.push({ qTitTran: el.qTitTran, pTran: el.pTran, hEven: el.hEven });
   });
   data = da;
@@ -700,33 +712,87 @@ async function getAllMainData() {
 
   let source = await resSource.json();
   source = source.data;
-  // await sleep(1000);
-  // await getAllTableDatas(source);
-  // await sleep(1000);
-  // await getAllMabnaDatas(source);
-  // await sleep(1000);
-  // await getAllDatas(source);
-  // await sleep(1000);
+  await sleep(1000);
+  await getAllTableDatas(source);
+  await sleep(1000);
+  await getAllMabnaDatas(source);
+  await sleep(1000);
+  await getAllDatas(source);
+  await sleep(1000);
   await getAllBuyDatas(source);
-  // await sleep(1000);
-
-
-
+  await sleep(1000);
   // await getAllStateDatas(source);
+  // await sleep(30 * 1000);
   // await getAllMainStateDatas(source);
   // await getAllSellDatas(source);
-
 }
 
 async function main() {
-  // await catchGroups();
-  // await getFirstPage();
-  // await getBestlimits();
-  // await sendAllCompaniesToDB();
-  await getAllMainData();
-  // setInterval(() => {
-  //   catchGroups();
-  // }, 24 * 60 * 60 * 1000);
+  // await getAllMainData()
+  setInterval(() => {
+    catchGroups();
+  }, 24 * 60 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 15 && h <16) 
+    {
+    const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
+    
+      let source = await resSource.json();
+      source = source.data;
+      getAllStateDatas(source);
+    }
+  },  45 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 17 && h <18) 
+    {
+    const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
+    
+      let source = await resSource.json();
+      source = source.data;
+      getAllMainStateDatas(source);
+    }
+  },  45 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 19 && h <20) 
+    {
+    const resSource = await fetch(
+      `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+    );
+  
+    let source = await resSource.json();
+    source = source.data;
+      getAllSellDatas(source);
+    }
+  },  45 * 60 * 1000);
+  while(true)
+  {
+    const sleep = (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if (h < 12  && h > 12)
+    await catchGroups();
+    await sleep(1000);
+    await getFirstPage();
+    await sleep(1000);
+    await getBestlimits();
+    await sleep(1000);
+    await sendAllCompaniesToDB();
+    await sleep(1000);
+    await getAllMainData();
+    await sleep(5000);
+  }
 }
 main();
 

@@ -104,22 +104,54 @@ export async function getStaticProps({ params: { name } }) {
     `${API_URL}/api/companies?filters[inscode]=${name}`
   );
   let nameInfo = await resDB.json();
+
   try {
-    const response = await fetch(
+    const responseMainData = await fetch(
+      `${API_URL}/api/maindata?filters[inscode]=${name}`
+    );
+    let resMainData = await responseMainData.json();
+
+    const responseStateData = await fetch(
+      `${API_URL}/api/statedatas?filters[inscode]=${name}`
+    );
+    let resStateData = await responseStateData.json();
+
+    const responseMainState = await fetch(
       `${API_URL}/api/cmds?filters[inscode]=${name}`
     );
-    let res = await response.json();
+    let resMainState = await responseMainState.json();
+
+    const responseBuy = await fetch(
+      `${API_URL}/api/buydatas?filters[inscode]=${name}`
+    );
+    let resBuy = await responseBuy.json();
+
+    const responseMabna = await fetch(
+      `${API_URL}/api/mabnas?filters[inscode]=${name}`
+    );
+    let resMabna = await responseMabna.json();
+
+    const responceSellData = await fetch(
+      `${API_URL}/api/mabnas?filters[inscode]=${name}`
+    );
+    let resSellData = await responceSellData.json();
+
+    const responceTableData= await fetch(
+      `${API_URL}/api/tabledatas?filters[inscode]=${name}`
+    );
+    let resTableData = await responceTableData.json();
+
     return {
       props: {
         nameInfo: nameInfo.data[0],
-        mainInformation: res.data[0].attributes.mainData.mainInformation,
-        stateData: res.data[0].attributes.mainData.stateData,
-        bestlimits: res.data[0].attributes.mainData.bestLimits,
-        volume: res.data[0].attributes.mainData.volume,
-        buy: res.data[0].attributes.mainData.buy,
+        mainInformation: [...resMainData.data[0].attributes.data.mainInformation,...resMabna.data[0].attributes.data.mabna],
+        volume: resMainData.data[0].attributes.data.volume,
+        stateData: resStateData.data[0].attributes.data.statData,
+        mainstate: resMainState.data[0].attributes.data.mainStateData,
+        buy: resBuy.data[0].attributes.mainData.buy,
+        haghighiAll: resSellData.data[0].attributes.data.sell,
+        bestlimits: resTableData.data[0].attributes.data.tabledata,
         name,
-        mainstate: res.data[0].attributes.mainData.mainstate,
-        haghighiAll: res.data[0].attributes.mainData.haghighiAll,
       },
     };
   } catch (error) {
@@ -137,21 +169,51 @@ async function ref(name) {
   let nameInfo = await resDB.json();
 
   try {
-    const response = await fetch(
+    const responseMainData = await fetch(
+      `${API_URL}/api/maindata?filters[inscode]=${name}`
+    );
+    let resMainData = await responseMainData.json();
+
+    const responseStateData = await fetch(
+      `${API_URL}/api/statedatas?filters[inscode]=${name}`
+    );
+    let resStateData = await responseStateData.json();
+
+    const responseMainState = await fetch(
       `${API_URL}/api/cmds?filters[inscode]=${name}`
     );
-    let res = await response.json();
+    let resMainState = await responseMainState.json();
+
+    const responseBuy = await fetch(
+      `${API_URL}/api/buydatas?filters[inscode]=${name}`
+    );
+    let resBuy = await responseBuy.json();
+
+    const responseMabna = await fetch(
+      `${API_URL}/api/mabnas?filters[inscode]=${name}`
+    );
+    let resMabna = await responseMabna.json();
+
+    const responceSellData = await fetch(
+      `${API_URL}/api/mabnas?filters[inscode]=${name}`
+    );
+    let resSellData = await responceSellData.json();
+
+    const responceTableData= await fetch(
+      `${API_URL}/api/tabledatas?filters[inscode]=${name}`
+    );
+    let resTableData = await responceTableData.json();
+
     return [
       nameInfo.data[0],
-      res.data[0].attributes.mainData.mainInformation,
-      res.data[0].attributes.mainData.stateData,
+      [...resMainData.data[0].attributes.data.mainInformation,...resMabna.data[0].attributes.data.mabna],
+      resStateData.data[0].attributes.data.statData,
       res.data[0].attributes.mainData.bestLimits,
-      res.data[0].attributes.mainData.volume,
-      res.data[0].attributes.mainData.buy,
+      resTableData.data[0].attributes.data.tabledata,
+      resBuy.data[0].attributes.mainData.buy,
       name,
-      res.data[0].attributes.mainData.mainstate,
-      res.data[0].attributes.mainData.haghighiAll,
-      1,
+      resMainState.data[0].attributes.data.mainStateData,
+      resSellData.data[0].attributes.data.sell,
     ];
   } catch (error) {
     let dat = await helpingAPI(name);
