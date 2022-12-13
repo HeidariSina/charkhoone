@@ -332,7 +332,7 @@ async function getBuyData(code){
   {
   webdata = await resweb.json();
   let buyjs = webdata.clientType;
-  let buy = {
+  buy = {
     sellIVolume: Object.keys(buyjs).length === 0 ? "" : buyjs.sell_I_Volume,
     sellICount: Object.keys(buyjs).length === 0 ? "" : buyjs.sell_CountI,
     buyIVolume: Object.keys(buyjs).length === 0 ? "" : buyjs.buy_I_Volume,
@@ -344,7 +344,7 @@ async function getBuyData(code){
   };
   }else
   {
-    let buy = {
+    buy = {
       sellIVolume: "",
       sellICount: "",
       buyIVolume: "",
@@ -712,15 +712,16 @@ async function getAllMainData() {
 
   let source = await resSource.json();
   source = source.data;
-  await sleep(1000);
-  await getAllTableDatas(source);
-  await sleep(1000);
-  await getAllMabnaDatas(source);
-  await sleep(1000);
-  await getAllDatas(source);
-  await sleep(1000);
+  // await sleep(1000);
+  // await getAllTableDatas(source);
+  // await sleep(1000);
+  // await getAllMabnaDatas(source);
+  // await sleep(1000);
+  // await getAllDatas(source);
+  // await sleep(1000);
   await getAllBuyDatas(source);
-  await sleep(1000);
+  // await sleep(1000);
+
   // await getAllStateDatas(source);
   // await sleep(30 * 1000);
   // await getAllMainStateDatas(source);
@@ -728,71 +729,71 @@ async function getAllMainData() {
 }
 
 async function main() {
-  // await getAllMainData()
-  setInterval(() => {
-    catchGroups();
-  }, 24 * 60 * 60 * 1000);
-  setInterval(async () => {
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if(h > 15 && h <16) 
-    {
-    const resSource = await fetch(
-        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-      );
+  await getAllMainData()
+  // setInterval(() => {
+  //   catchGroups();
+  // }, 24 * 60 * 60 * 1000);
+  // setInterval(async () => {
+  //   let  currentdate = new Date();
+  //   let h = currentdate.getHours();
+  //   if(h > 15 && h <16) 
+  //   {
+  //   const resSource = await fetch(
+  //       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+  //     );
     
-      let source = await resSource.json();
-      source = source.data;
-      getAllStateDatas(source);
-    }
-  },  45 * 60 * 1000);
-  setInterval(async () => {
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if(h > 17 && h <18) 
-    {
-    const resSource = await fetch(
-        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-      );
+  //     let source = await resSource.json();
+  //     source = source.data;
+  //     getAllStateDatas(source);
+  //   }
+  // },  45 * 60 * 1000);
+  // setInterval(async () => {
+  //   let  currentdate = new Date();
+  //   let h = currentdate.getHours();
+  //   if(h > 17 && h <18) 
+  //   {
+  //   const resSource = await fetch(
+  //       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+  //     );
     
-      let source = await resSource.json();
-      source = source.data;
-      getAllMainStateDatas(source);
-    }
-  },  45 * 60 * 1000);
-  setInterval(async () => {
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if(h > 19 && h <20) 
-    {
-    const resSource = await fetch(
-      `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-    );
+  //     let source = await resSource.json();
+  //     source = source.data;
+  //     getAllMainStateDatas(source);
+  //   }
+  // },  45 * 60 * 1000);
+  // setInterval(async () => {
+  //   let  currentdate = new Date();
+  //   let h = currentdate.getHours();
+  //   if(h > 19 && h <20) 
+  //   {
+  //   const resSource = await fetch(
+  //     `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+  //   );
   
-    let source = await resSource.json();
-    source = source.data;
-      getAllSellDatas(source);
-    }
-  },  45 * 60 * 1000);
-  while(true)
-  {
-    const sleep = (ms) => {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    };
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if (h < 12  && h > 12)
-    await catchGroups();
-    await sleep(1000);
-    await getFirstPage();
-    await sleep(1000);
-    await getBestlimits();
-    await sleep(1000);
-    await sendAllCompaniesToDB();
-    await sleep(1000);
-    await getAllMainData();
-    await sleep(5000);
-  }
+  //   let source = await resSource.json();
+  //   source = source.data;
+  //     getAllSellDatas(source);
+  //   }
+  // },  45 * 60 * 1000);
+  // while(true)
+  // {
+  //   const sleep = (ms) => {
+  //     return new Promise((resolve) => setTimeout(resolve, ms));
+  //   };
+  //   let  currentdate = new Date();
+  //   let h = currentdate.getHours();
+  //   if (h < 12  && h > 12)
+  //   await catchGroups();
+  //   await sleep(1000);
+  //   await getFirstPage();
+  //   await sleep(1000);
+  //   await getBestlimits();
+  //   await sleep(1000);
+  //   await sendAllCompaniesToDB();
+  //   await sleep(1000);
+  //   await getAllMainData();
+  //   await sleep(5000);
+  // }
 }
 main();
 
