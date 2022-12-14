@@ -1,4 +1,3 @@
-import Link from "next/link";
 import style from "../../../styles/borse/main/best.module.css";
 export default function best1({ data, mobadel }) {
   let temp = [0, 1, 2, 3, 4];
@@ -56,13 +55,13 @@ function makeTable(index, len, el, mobadel) {
           {" " + mobadel(el[index].pClosing)}
         </td>
         <td className={style.right}>
-          <Link href={`/${el[index].instrument.insCode}`}>
+          <a href={`/${el[index].instrument.insCode}`}>
             {"(" +
               el[index].instrument.lVal18AFC +
               ")" +
               " " +
               el[index].instrument.lVal30}
-          </Link>
+          </a>
         </td>
       </tr>
     );

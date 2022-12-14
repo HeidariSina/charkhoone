@@ -1,5 +1,4 @@
 import style from "../../../styles/borse/main/list.module.css";
-import Link from "next/link";
 export default function list({ data, title }) {
   return (
     <div className={style.main}>
@@ -53,13 +52,13 @@ export default function list({ data, title }) {
                   {" " + mobadel(el.pClosing)}
                 </td>
                 <td className={style.right}>
-                  <Link href={`/${el.instrument.insCode}`}>
+                  <a href={`/${el.instrument.insCode}`}>
                     {"(" +
                       el.instrument.lVal18AFC +
                       ")" +
                       " " +
                       el.instrument.lVal30}
-                  </Link>
+                  </a>
                 </td>
               </tr>
             );

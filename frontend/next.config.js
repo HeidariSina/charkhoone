@@ -8,6 +8,7 @@ const nextConfig = {
     API_URL: `http://94.101.186.158:1338`,
     SOLO_URL: `http://94.101.186.158:3000`,
   },
+  trailingSlash : true,
 };
 
 module.exports = nextConfig;

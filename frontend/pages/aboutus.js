@@ -1,6 +1,5 @@
 import Layout from "../components/borse/layout";
 import style from "../styles/aboutus.module.css";
-import Link from "next/link";
 import { FaBars, FaCoins } from "react-icons/fa";
 import { GiMoneyStack } from "react-icons/gi";
 

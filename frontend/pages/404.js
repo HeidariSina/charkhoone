@@ -1,6 +1,5 @@
 import styles from "../styles/404.module.css";
 import { FaExclamationCircle } from "react-icons/fa";
-import Link from "next/link";
 import Head from "next/head";
 export default function notfound() {
   return (
@@ -16,13 +15,13 @@ export default function notfound() {
           </h1>
           <div className={styles.third}>
             <h2 className={styles.sectext}>
-              <Link href={"/"}>&rarr; Back to Main Page</Link>
+              <a href={"/"}>&rarr; Back to Main Page</a>
             </h2>
             <h2 className={styles.sectext}>
-              <Link href={"/crypto"}>&rarr; Back to CryptoCurrencys Page</Link>
+              <a href={"/crypto"}>&rarr; Back to CryptoCurrencys Page</a>
             </h2>
             <h2 className={styles.sectext}>
-              <Link href={"/borse"}>&rarr; Back to Borse Page</Link>
+              <a href={"/borse"}>&rarr; Back to Borse Page</a>
             </h2>
           </div>
         </div>

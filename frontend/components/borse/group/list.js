@@ -1,5 +1,4 @@
 import style from "../../../styles/borse/group/list.module.css";
-import Link from "next/link";
 import { FaFrown } from "react-icons/fa";
 
 export default function list({ data, group }) {
@@ -49,14 +48,14 @@ export default function list({ data, group }) {
                 </td>
                 <td>{mobadel(data.attributes.price)}</td>
                 <td>
-                  <Link href={`/borse/${data.attributes.inscode}`}>
+                  <a href={`/${data.attributes.inscode}`}>
                     <div className={style.scd}>
                       <p>
                         ({data.attributes.name}){" "}
                         {" " + data.attributes.fullname}
                       </p>
                     </div>
-                  </Link>
+                  </a>
                 </td>
                 <td className={style.para}>{index + 1}</td>
               </tr>

@@ -1,10 +1,9 @@
 import style from "../../styles/both/searchbar.module.css";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import Router from 'next/router';
 
 export default function SearchBar() {
-  const router = useRouter();
   const [name, setname] = useState("");
   const change = (e) => {
     setname(e.target.value);
@@ -12,7 +11,7 @@ export default function SearchBar() {
   const submit = (e) => {
     e.preventDefault();
     setname("");
-    router.push(`/borse/search?name=${name.toLowerCase()}`);
+    Router.push(({pathname:"/search" , query:{name : name}}))
   };
   return (
     <div className={style.div}>

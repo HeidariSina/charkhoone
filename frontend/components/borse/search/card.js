@@ -1,13 +1,13 @@
-import style from "../../../styles/borse/search/card.module.css";
 import Link from "next/link";
+import style from "../../../styles/borse/search/card.module.css";
 
 export default function card({ data }) {
   return (
-    <Link href={`/borse/${data.attributes.inscode}`} passHref>
-      <div className={style.card}>
+    <a href={`/${data.attributes.inscode}`} className={style.card}>
+      <div className={style.dd}>
         <p className={style.head}>{data.attributes.fullname}</p>
         <p>(نماد : {data.attributes.name})</p>
       </div>
-    </Link>
+    </a>
   );
 }

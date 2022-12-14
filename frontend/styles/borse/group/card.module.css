@@ -1,5 +1,4 @@
-.main
-{
+.main {
     text-align: center;
     border: 0.1rem solid white;
     width: 26%;
@@ -8,31 +7,38 @@
     margin-top: 1.2rem;
     padding: 0.5rem;
     height: 7rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0px 0px 10px #aaa;
     transition: 0.3s ease-in-out;
     cursor: pointer;
 }
-.main:hover
-{
+
+.div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.main:hover {
     transform: scale(1.1);
 }
-.head
-{
+
+.head {
     font-size: 1.3rem;
     font-weight: 500;
 }
+
 @media screen and (max-width: 1550px) {
     .main {
-      width: 40%;
+        width: 40%;
     }
 }
+
 @media screen and (max-width: 1040px) {
     .main {
-      width: 65%;
+        width: 65%;
     }
 }

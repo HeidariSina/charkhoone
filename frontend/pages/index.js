@@ -4,7 +4,6 @@ import Group1 from "../components/borse/main/group1";
 import Group2 from "../components/borse/main/group2";
 import Best from "../components/borse/main/best";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { API_URL, SOLO_URL } from "../config";
 
 export default function Home({ g1, g2, g1best, g2best }) {
@@ -24,9 +23,9 @@ export default function Home({ g1, g2, g1best, g2best }) {
           <p className={style.text}>
             <span className={style.a}>
               {" "}
-              <Link href={`/bestBorse`} className={style.a}>
+              <a href={`/bestBorse`} className={style.a}>
                 (لیست کامل)
-              </Link>
+              </a>
             </span>{" "}
             نماد های برتراکنش
           </p>
@@ -38,9 +37,9 @@ export default function Home({ g1, g2, g1best, g2best }) {
           <p className={style.text}>
             <span className={style.a}>
               {" "}
-              <Link href={`/bestFaraBorse`} className={style.a}>
+              <a href={`/bestFaraBorse`} className={style.a}>
                 (لیست کامل)
-              </Link>
+              </a>
             </span>{" "}
             نماد های برتراکنش
           </p>
