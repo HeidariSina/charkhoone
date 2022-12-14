@@ -107,7 +107,7 @@ export async function getStaticProps({ params: { name } }) {
 
   try {
     const responseMainData = await fetch(
-      `${API_URL}/api/maindata?filters[inscode]=${name}`
+      `${API_URL}/api/maindatas?filters[inscode]=${name}`
     );
     let resMainData = await responseMainData.json();
 
@@ -117,7 +117,7 @@ export async function getStaticProps({ params: { name } }) {
     let resStateData = await responseStateData.json();
 
     const responseMainState = await fetch(
-      `${API_URL}/api/cmds?filters[inscode]=${name}`
+      `${API_URL}/api/mainstates?filters[inscode]=${name}`
     );
     let resMainState = await responseMainState.json();
 
@@ -132,7 +132,7 @@ export async function getStaticProps({ params: { name } }) {
     let resMabna = await responseMabna.json();
 
     const responceSellData = await fetch(
-      `${API_URL}/api/mabnas?filters[inscode]=${name}`
+      `${API_URL}/api/selldatas?filters[inscode]=${name}`
     );
     let resSellData = await responceSellData.json();
 
@@ -140,15 +140,14 @@ export async function getStaticProps({ params: { name } }) {
       `${API_URL}/api/tabledatas?filters[inscode]=${name}`
     );
     let resTableData = await responceTableData.json();
-
     return {
       props: {
         nameInfo: nameInfo.data[0],
-        mainInformation: [...resMainData.data[0].attributes.data.mainInformation,...resMabna.data[0].attributes.data.mabna],
+        mainInformation: Object.assign(resMainData.data[0].attributes.data.mainInformation,resMabna.data[0].attributes.data.mabna),
         volume: resMainData.data[0].attributes.data.volume,
         stateData: resStateData.data[0].attributes.data.statData,
         mainstate: resMainState.data[0].attributes.data.mainStateData,
-        buy: resBuy.data[0].attributes.mainData.buy,
+        buy: resBuy.data[0].attributes.data.buydata,
         haghighiAll: resSellData.data[0].attributes.data.sell,
         bestlimits: resTableData.data[0].attributes.data.tabledata,
         name,
@@ -170,7 +169,7 @@ async function ref(name) {
 
   try {
     const responseMainData = await fetch(
-      `${API_URL}/api/maindata?filters[inscode]=${name}`
+      `${API_URL}/api/maindatas?filters[inscode]=${name}`
     );
     let resMainData = await responseMainData.json();
 
@@ -180,7 +179,7 @@ async function ref(name) {
     let resStateData = await responseStateData.json();
 
     const responseMainState = await fetch(
-      `${API_URL}/api/cmds?filters[inscode]=${name}`
+      `${API_URL}/api/mainstates?filters[inscode]=${name}`
     );
     let resMainState = await responseMainState.json();
 
@@ -195,7 +194,7 @@ async function ref(name) {
     let resMabna = await responseMabna.json();
 
     const responceSellData = await fetch(
-      `${API_URL}/api/mabnas?filters[inscode]=${name}`
+      `${API_URL}/api/selldatas?filters[inscode]=${name}`
     );
     let resSellData = await responceSellData.json();
 
@@ -206,11 +205,11 @@ async function ref(name) {
 
     return [
       nameInfo.data[0],
-      [...resMainData.data[0].attributes.data.mainInformation,...resMabna.data[0].attributes.data.mabna],
+      Object.assign(resMainData.data[0].attributes.data.mainInformation,resMabna.data[0].attributes.data.mabna),
       resStateData.data[0].attributes.data.statData,
-      res.data[0].attributes.mainData.bestLimits,
       resTableData.data[0].attributes.data.tabledata,
-      resBuy.data[0].attributes.mainData.buy,
+      resMainData.data[0].attributes.data.volume,
+      resBuy.data[0].attributes.data.buydata,
       name,
       resMainState.data[0].attributes.data.mainStateData,
       resSellData.data[0].attributes.data.sell,

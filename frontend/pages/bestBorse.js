@@ -1,6 +1,6 @@
 import Layout from "../components/borse/layout";
 import List from "../components/borse/main/list";
-import { API_URL, SOLO_URL } from "../../config";
+import { API_URL, SOLO_URL } from "../config";
 import { useEffect, useState } from "react";
 
 export default function Best1({ datas }) {

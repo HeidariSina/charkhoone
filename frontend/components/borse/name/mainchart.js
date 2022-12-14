@@ -5,10 +5,13 @@ export default function mainchart({ data }) {
   let vol = [];
   let value = [];
   let labels = [];
+  let j = 0
   for (let i of data) {
+    if (j % 20 == 0){
     vol.push(i.qTitTran);
     value.push(i.pTran);
-    labels.push(numberToTime(i.hEven));
+    labels.push(numberToTime(i.hEven));}
+    j++;
   }
   const datas = {
     labels: labels,

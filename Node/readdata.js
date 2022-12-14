@@ -1,9 +1,15 @@
-const API_URL = "http://37.32.26.91:1338/api";
+const API_URL = "http://94.101.186.158:1338/api";
+
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 const fetch = require("node-fetch");
+
 // this function includes a function that send a company to db
 async function sendCompony(data, DB) {
   let i = DB.findIndex((ele) => ele.attributes.inscode == data.inscode);
+  let response ;
   let body = {
     data: {
       name: data.name,
@@ -18,23 +24,27 @@ async function sendCompony(data, DB) {
     },
   };
   if (i < 0) {
-    const response = await fetch(`${API_URL}/companies`, {
+    response = await fetch(`${API_URL}/companies`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/companies/${DB[i].id}`, {
+    response = await fetch(`${API_URL}/companies/${DB[i].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   }
+  delete(response);
+  delete(body);
+  delete(i);
 }
 
 //sender of groups to db
 async function sendGroup(data, DB) {
   let i = DB.findIndex((ele) => ele.attributes.inscode == data.inscode);
+  let response;
   let body = {
     data: {
       name: data.name,
@@ -42,24 +52,28 @@ async function sendGroup(data, DB) {
     },
   };
   if (i < 0) {
-    const response = await fetch(`${API_URL}/groups`, {
+    response = await fetch(`${API_URL}/groups`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/groups/${DB[i].id}`, {
+    response = await fetch(`${API_URL}/groups/${DB[i].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   }
+  delete(response);
+  delete(body);
+  delete(i);
 }
 
 // sender the first page to db
 async function sendFP(fPData) {
   const resDB = await fetch(`${API_URL}/firstpages`);
   const dB = await resDB.json();
+  let response;
   let body = {
     data: {
       data: {
@@ -71,23 +85,28 @@ async function sendFP(fPData) {
     },
   };
   if (dB.data.length == 0) {
-    const response = await fetch(`${API_URL}/firstpages`, {
+    response = await fetch(`${API_URL}/firstpages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/firstpages/${dB.data[0].id}`, {
+    response = await fetch(`${API_URL}/firstpages/${dB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   }
+  delete(response);
+  delete(body);
+  delete(dB);
+  delete(resDB);
 }
 
 async function sendBL(dat, number) {
   const resDB = await fetch(`${API_URL}/bestlimitsg${number}s`);
   const dB = await resDB.json();
+  let response;
   let body = {
     data: {
       data: {
@@ -96,13 +115,13 @@ async function sendBL(dat, number) {
     },
   };
   if (dB.data.length == 0) {
-    const response = await fetch(`${API_URL}/bestlimitsg${number}s`, {
+    response = await fetch(`${API_URL}/bestlimitsg${number}s`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(
+    response = await fetch(
       `${API_URL}/bestlimitsg${number}s/${dB.data[0].id}`,
       {
         method: "PUT",
@@ -111,6 +130,10 @@ async function sendBL(dat, number) {
       }
     );
   }
+  delete(body);
+  delete(resDB);
+  delete(dB);
+  delete(response);
 }
 // make Exactly 2 length
 function pad(d) {
@@ -119,16 +142,20 @@ function pad(d) {
 
 // catch all of groups send them to db
 async function catchGroups() {
+  let res;
+  let resDB;
+  let DB;
+  let groups;
   try {
-    const res = await fetch(
+    res = await fetch(
       `http://cdn.tsetmc.com/api/StaticData/GetStaticData`
     );
-    const resDB = await fetch(
+    resDB = await fetch(
       `${API_URL}/groups?pagination[page]=1&pagination[pageSize]=300`
     );
-    let DB = await resDB.json();
+    DB = await resDB.json();
     if (res.status == 200) {
-      let groups = await res.json();
+      groups = await res.json();
       for (gr of groups.staticData) {
         if (gr.type == "IndustrialGroup") {
           let dat = {
@@ -136,10 +163,19 @@ async function catchGroups() {
             group: pad(gr.code),
           };
           sendGroup(dat, DB.data);
+          delete(dat)
         }
       }
     }
+    delete(res);
+    delete(resDB);
+    delete(DB);
+    delete(groups);
   } catch (error) {
+    delete(res);
+    delete(resDB);
+    delete(DB);
+    delete(groups);
     setTimeout(() => catchGroups(), 3000);
   }
 }
@@ -151,7 +187,7 @@ async function componyToId(number, DB) {
   );
   if (res.status == 200) {
     let datas = await res.json();
-    datas["relatedCompany"].map(async (e) => {
+    await datas["relatedCompany"].map(async (e) => {
       let databack = {
         name: e.instrument.lVal18AFC,
         fullname: e.instrument.lVal30,
@@ -164,51 +200,78 @@ async function componyToId(number, DB) {
         priceYesterday: e.priceYesterday,
       };
       await sendCompony(databack, DB);
+      delete(databack);
     });
+    delete(datas);
   }
+  delete(res);
 }
 
 //send each groups of companies to DB
 async function sendAllCompaniesToDB() {
+  let resDB;
+  let resSource;
+  let source;
+  let DB;
   try {
-    const resDB = await fetch(
+    resDB = await fetch(
       `${API_URL}/groups?pagination[page]=1&pagination[pageSize]=300`
     );
-    const resSource = await fetch(
+    resSource = await fetch(
       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
     );
-    let source = await resDB.json();
-    let DB = await resSource.json();
+    source = await resDB.json();
+    DB = await resSource.json();
     for (g of source.data) {
       await componyToId(g.attributes.group, DB.data);
     }
+    delete(resDB);
+    delete(resSource);
+    delete(DB);
+    delete(source);
   } catch (error) {
+    delete(resDB);
+    delete(resSource);
+    delete(DB);
+    delete(source);
     setTimeout(() => sendAllCompaniesToDB(), 3000);
   }
 }
 
 // send firstPage Data to DB
 async function getFirstPage() {
+  let g1res;
+  let g2res;
+  let g2jss;
+  let g1bres;
+  let g1bjs;
+  let g2bres;
+  let g2bjs;
+  let g1js;
+  let g2js;
+  let g1;
+  let g2;
+  let g1jss;
   try {
-    const g1res = await fetch(
+     g1res = await fetch(
       "http://cdn.tsetmc.com/api/MarketData/GetMarketOverview/1"
     );
-    const g1jss = await g1res.json();
-    const g2res = await fetch(
+     g1jss = await g1res.json();
+     g2res = await fetch(
       "http://cdn.tsetmc.com/api/MarketData/GetMarketOverview/2"
     );
-    const g2jss = await g2res.json();
-    const g1bres = await fetch(
+     g2jss = await g2res.json();
+     g1bres = await fetch(
       "http://cdn.tsetmc.com/api/ClosingPrice/GetTradeTop/MostVisited/1/5"
     );
-    const g1bjs = await g1bres.json();
-    const g2bres = await fetch(
+     g1bjs = await g1bres.json();
+     g2bres = await fetch(
       "http://cdn.tsetmc.com/api/ClosingPrice/GetTradeTop/MostVisited/2/5"
     );
-    const g2bjs = await g2bres.json();
-    let g1js = g1jss.marketOverview;
-    let g2js = g2jss.marketOverview;
-    let g1 = {
+     g2bjs = await g2bres.json();
+     g1js = g1jss.marketOverview;
+     g2js = g2jss.marketOverview;
+     g1 = {
       date: g1js.marketActivityDEven,
       time: g1js.marketActivityHEven,
       changeShakhes: g1js.indexChange,
@@ -221,7 +284,7 @@ async function getFirstPage() {
       volume: g1js.marketActivityQTotTran,
       status: g1js.marketStateTitle,
     };
-    let g2 = {
+    g2 = {
       date: g2js.marketActivityDEven,
       time: g2js.marketActivityHEven,
       shakhesChange: g2js.indexChange,
@@ -233,8 +296,32 @@ async function getFirstPage() {
       volume: g2js.marketActivityQTotTran,
       status: g2js.marketStateTitle,
     };
-    sendFP({ g1, g2, g1best: g1bjs.tradeTop, g2best: g2bjs.tradeTop });
+    await sendFP({ g1, g2, g1best: g1bjs.tradeTop, g2best: g2bjs.tradeTop });
+    delete(g1res);
+    delete(g1jss);
+    delete(g2res);
+    delete(g2jss);
+    delete(g1bres);
+    delete(g1bjs);
+    delete(g2bres);
+    delete(g2bjs);
+    delete(g1js);
+    delete(g2js);
+    delete(g1);
+    delete(g2);
   } catch (error) {
+    delete(g1res);
+    delete(g1jss);
+    delete(g2res);
+    delete(g2jss);
+    delete(g1bres);
+    delete(g1bjs);
+    delete(g2bres);
+    delete(g2bjs);
+    delete(g1js);
+    delete(g2js);
+    delete(g1);
+    delete(g2);
     setTimeout(() => getFirstPage(), 3000);
   }
 }
@@ -249,7 +336,10 @@ async function getBestlimits() {
       );
       const data = await resDB.json();
       await sendBL(data, i);
+      delete(resDB);
+      delete(data);
     }
+    delete(numbers);
   } catch (error) {
     setTimeout(() => getBestlimits(), 3000);
   }
@@ -257,9 +347,6 @@ async function getBestlimits() {
 
 async function getAllTableDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   for (let dat of source) {
     await sleep(100);
     getTableData(dat.attributes.inscode);
@@ -279,6 +366,7 @@ async function getTableData(code)
   }
   const res = await fetch(`${API_URL}/tabledatas?filters[inscode]=${code}`);
   const DB = await res.json();
+  let response;
   let body = {
     data: {
       inscode: code,
@@ -288,19 +376,25 @@ async function getTableData(code)
     },
   };
   if (DB.data.length < 1) {
-    const response = await fetch(`${API_URL}/tabledatas`, {
+     response = await fetch(`${API_URL}/tabledatas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/tabledatas/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/tabledatas/${DB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
+  }
+  delete(response);
+  delete(body);
+  delete(DB);
+  delete(res);
+  delete(tableData);
+  delete(resTABLE);
+}catch (error) {
     setTimeout(() => {
       getTableData(code);
     }, 300);
@@ -309,9 +403,6 @@ async function getTableData(code)
 
 async function getAllBuyDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   for (let dat of source) {
     await sleep(100);
     getBuyData(dat.attributes.inscode);
@@ -328,6 +419,7 @@ async function getBuyData(code){
   );
   const res = await fetch(`${API_URL}/buydatas?filters[inscode]=${code}`);
   const DB = await res.json();
+  let response;
   if(resweb.status == 200)
   {
   webdata = await resweb.json();
@@ -342,6 +434,7 @@ async function getBuyData(code){
     buyNVolume: Object.keys(buyjs).length === 0 ? "" : buyjs.buy_N_Volume,
     buyNCount: Object.keys(buyjs).length === 0 ? "" : buyjs.sell_CountN,
   };
+  delete(buyjs);
   }else
   {
     buy = {
@@ -365,20 +458,26 @@ async function getBuyData(code){
     },
   };
   if (DB.data.length < 1) {
-    const response = await fetch(`${API_URL}/buydatas`, {
+    response = await fetch(`${API_URL}/buydatas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/buydatas/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/buydatas/${DB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
-    console.log(`Cant fetch ${error}`);
+  }
+  delete(response);
+  delete(body);
+  delete(buy);
+  delete(webdata);
+  delete(resweb);
+  delete(res);
+  delete(DB);
+}catch (error) {
     setTimeout(() => {
       getBuyData(code);
     }, 300);
@@ -387,9 +486,6 @@ async function getBuyData(code){
 
 async function getAllMabnaDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   await sleep(10);
   for (let dat of source) {
     getMabnaData(dat.attributes.inscode);
@@ -406,6 +502,7 @@ async function getMabnaData(code){
   webdata = await resweb.json();
   const res = await fetch(`${API_URL}/mabnas?filters[inscode]=${code}`);
   const DB = await res.json();
+  let response;
   let mabna1 = {
     saham :     Object.keys(webdata).length === 0 ? "-" : webdata.instrument.zTitad,
     volumeMabna : Object.keys(webdata).length === 0 ? "-" : webdata.instrument.baseVol,
@@ -419,19 +516,26 @@ async function getMabnaData(code){
     },
   };
   if (DB.data.length < 1) {
-    const response = await fetch(`${API_URL}/mabnas`, {
+    response = await fetch(`${API_URL}/mabnas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/mabnas/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/mabnas/${DB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
+  }
+  delete(body);
+  delete(response);
+  delete(webdata);
+  delete(resweb);
+  delete(DB);
+  delete(res);
+  delete(mabna1);
+}catch (error) {
     setTimeout(() => {
       getMabnaData(code);
     }, 300);
@@ -441,9 +545,6 @@ async function getMabnaData(code){
 
 async function getAllDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   for (let dat of source) {
     await sleep(10);
     getData(dat.attributes.inscode);
@@ -461,6 +562,7 @@ async function getData(code){
   const res = await fetch(`${API_URL}/maindatas?filters[inscode]=${code}`);
   const DB = await res.json();
   let data = webdata.closingPriceInfo;
+  let response;
   let mainInformation = {
     max: Object.keys(data).length === 0 ? "-" : data.priceMax,
     min: Object.keys(data).length === 0 ? "-" : data.priceMin,
@@ -493,19 +595,28 @@ async function getData(code){
     },
   };
   if (DB.data.length < 1) {
-    const response = await fetch(`${API_URL}/maindatas`, {
+    response = await fetch(`${API_URL}/maindatas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/maindatas/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/maindatas/${DB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
+  }
+  delete(response);
+  delete(body);
+  delete(DB);
+  delete(webdata);
+  delete(resweb);
+  delete(res);
+  delete(mainInformation);
+  delete(volume);
+  delete(data);
+}catch (error) {
     setTimeout(() => {
       getData(code);
     }, 300);
@@ -514,9 +625,6 @@ async function getData(code){
 
 async function getAllStateDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   for (let dat of source) {
     await sleep(2100);
     getStateData(dat.attributes.inscode);
@@ -534,6 +642,7 @@ async function getStateData(code){
   const res = await fetch(`${API_URL}/statedatas?filters[inscode]=${code}`);
   const DB = await res.json();
   let temp=[];
+  let response;
   let data = webdata.closingPriceDaily;
   for (let i of data) {
         temp.push({
@@ -558,20 +667,27 @@ async function getStateData(code){
     },
   };
   if (DB.data.length < 1) {
-    const response = await fetch(`${API_URL}/statedatas`, {
+    response = await fetch(`${API_URL}/statedatas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/statedatas/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/statedatas/${DB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
-    console.log(`Cant fetch ${error}`);
+  }
+  delete(response);
+  delete(body);
+  delete(DB);
+  delete(webdata);
+  delete(resweb);
+  delete(res);
+  delete(temp);
+  delete(data);
+}catch (error) {
     setTimeout(() => {
       getStateData(code);
     }, 300);
@@ -580,9 +696,6 @@ async function getStateData(code){
 
 async function getAllSellDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   for (let dat of source) {
     await sleep(2000);
     getSellData(dat.attributes.inscode);
@@ -636,8 +749,16 @@ async function getSellData(code){
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
+  }
+  delete(response);
+  delete(body);
+  delete(DB);
+  delete(webdata);
+  delete(resweb);
+  delete(res);
+  delete(temp2);
+  delete(data);
+}catch (error) {
     setTimeout(() => {
       getSellData(code);
     }, 300);
@@ -646,9 +767,6 @@ async function getSellData(code){
 
 async function getAllMainStateDatas(source)
 {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   for (let dat of source) {
     await sleep(2000);
     getMainStateData(dat.attributes.inscode);
@@ -660,12 +778,18 @@ async function getMainStateData(code){
   try
   {
   const resweb = await fetch(
-    `http://cdn.tsetmc.com/api/Trade/GetTrade/${code}`
+    `http://cdn.tsetmc.com/api/Trade/GetTrade/${code}` , {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    },
+  }
   );
   webdata = await resweb.json();
   const res = await fetch(`${API_URL}/mainstates?filters[inscode]=${code}`);
   const DB = await res.json();
   let data = webdata.trade;
+  let response;
   let da = []
   data.reverse();
   data.map((el) => {
@@ -682,19 +806,27 @@ async function getMainStateData(code){
     },
   };
   if (DB.data.length < 1) {
-    const response = await fetch(`${API_URL}/mainstates`, {
+    response = await fetch(`${API_URL}/mainstates`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    const response = await fetch(`${API_URL}/mainstates/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/mainstates/${DB.data[0].id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-  }}catch (error) {
-    console.log(`Cant fetch ${code}`);
+  }
+  delete(response);
+  delete(body);
+  delete(DB);
+  delete(webdata);
+  delete(resweb);
+  delete(res);
+  delete(da);
+  delete(data);
+}catch (error) {
     setTimeout(() => {
       getMainStateData(code);
     }, 300);
@@ -703,25 +835,24 @@ async function getMainStateData(code){
 
 //get all of companieys mainData
 async function getAllMainData() {
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   const resSource = await fetch(
     `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
   );
 
   let source = await resSource.json();
   source = source.data;
-  // await sleep(1000);
-  // await getAllTableDatas(source);
-  // await sleep(1000);
-  // await getAllMabnaDatas(source);
-  // await sleep(1000);
-  // await getAllDatas(source);
-  // await sleep(1000);
+  await sleep(3000);
+  await getAllTableDatas(source);
+  await sleep(3000);
+  await getAllMabnaDatas(source);
+  await sleep(3000);
+  await getAllDatas(source);
+  await sleep(3000);
   await getAllBuyDatas(source);
-  // await sleep(1000);
-
+  delete(resSource);
+  delete(source);
+  await sleep(3000);
+  
   // await getAllStateDatas(source);
   // await sleep(30 * 1000);
   // await getAllMainStateDatas(source);
@@ -729,72 +860,88 @@ async function getAllMainData() {
 }
 
 async function main() {
-  await getAllMainData()
-  // setInterval(() => {
-  //   catchGroups();
-  // }, 24 * 60 * 60 * 1000);
-  // setInterval(async () => {
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if(h > 15 && h <16) 
-  //   {
-  //   const resSource = await fetch(
-  //       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-  //     );
+  // await getAllMainData()
+  setInterval(() => {
+    catchGroups();
+  }, 24 * 60 * 60 * 1000);
+  setInterval(async () => {
+    let currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 15 && h <16) 
+    {
+    const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
     
-  //     let source = await resSource.json();
-  //     source = source.data;
-  //     getAllStateDatas(source);
-  //   }
-  // },  45 * 60 * 1000);
-  // setInterval(async () => {
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if(h > 17 && h <18) 
-  //   {
-  //   const resSource = await fetch(
-  //       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-  //     );
+      let source = await resSource.json();
+      source = source.data;
+      await getAllStateDatas(source);
+      delete(source);
+      delete(resSource);
+    }
+    delete(currentdate);
+    delete(h);
+  },  60 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 17 && h <18) 
+    {
+    const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
     
-  //     let source = await resSource.json();
-  //     source = source.data;
-  //     getAllMainStateDatas(source);
-  //   }
-  // },  45 * 60 * 1000);
-  // setInterval(async () => {
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if(h > 19 && h <20) 
-  //   {
-  //   const resSource = await fetch(
-  //     `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-  //   );
+      let source = await resSource.json();
+      source = source.data;
+    await getAllMainStateDatas(source);
+      delete(source);
+      delete(resSource);
+    }
+    delete(currentdate);
+    delete(h);
+  },  60 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 19 && h <20) 
+    {
+    const resSource = await fetch(
+      `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+    );
   
-  //   let source = await resSource.json();
-  //   source = source.data;
-  //     getAllSellDatas(source);
-  //   }
-  // },  45 * 60 * 1000);
-  // while(true)
-  // {
-  //   const sleep = (ms) => {
-  //     return new Promise((resolve) => setTimeout(resolve, ms));
-  //   };
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if (h < 12  && h > 12)
-  //   await catchGroups();
-  //   await sleep(1000);
-  //   await getFirstPage();
-  //   await sleep(1000);
-  //   await getBestlimits();
-  //   await sleep(1000);
-  //   await sendAllCompaniesToDB();
-  //   await sleep(1000);
-  //   await getAllMainData();
-  //   await sleep(5000);
-  // }
+    let source = await resSource.json();
+    source = source.data;
+    await getAllSellDatas(source);
+      delete(source);
+      delete(resSource);
+    }
+    delete(currentdate);
+    delete(h);
+  },  60 * 60 * 1000);
+  while(true)
+  {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if (h < 12 && h > 8){
+      await catchGroups();
+      await sleep(2000);
+      await getFirstPage();
+      await sleep(2000);
+      await getBestlimits();
+      await sleep(2000);
+      await sendAllCompaniesToDB();
+      await sleep(2000);
+      await getAllMainData();
+      await sleep(5000);
+      delete(currentdate);
+      delete(h);
+    }
+    else
+    {
+      delete(currentdate);
+      delete(h);
+      await sleep(30 * 60 * 1000);
+    }
+  }
 }
 main();
-
-// http://cdn.tsetmc.com/api/ClientType/GetClientTypeHistory/37661500521100963

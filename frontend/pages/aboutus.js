@@ -1,4 +1,4 @@
-import Layout from "../components/crypto/layout";
+import Layout from "../components/borse/layout";
 import style from "../styles/aboutus.module.css";
 import Link from "next/link";
 import { FaBars, FaCoins } from "react-icons/fa";
@@ -8,26 +8,6 @@ export default function aboutus() {
   return (
     <Layout title={"About Us"}>
       <div>
-        <div className={style.div}>
-          <Link href={"/crypto"} passHref>
-            <div className={style.back}>
-              <FaCoins />
-              <p className={style.text}>CryptoCurrency Page</p>
-            </div>
-          </Link>
-          <Link href={"/"} passHref>
-            <div className={style.back}>
-              <FaBars />
-              <p className={style.text}>Main Menu</p>
-            </div>
-          </Link>
-          <Link href={"/borse"} passHref>
-            <div className={style.back}>
-              <GiMoneyStack />
-              <p className={style.text}>Borse Teharn Page</p>
-            </div>
-          </Link>
-        </div>
         <div className={style.parag1}>
           <h1 className={style.h1}>درباره ی ما</h1>
           <p>
