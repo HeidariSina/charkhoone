@@ -348,7 +348,7 @@ async function getBestlimits() {
 async function getAllTableDatas(source)
 {
   for (let dat of source) {
-    await sleep(300);
+    await sleep(200);
     getTableData(dat.attributes.inscode);
   }
 }
@@ -404,7 +404,7 @@ async function getTableData(code)
 async function getAllBuyDatas(source)
 {
   for (let dat of source) {
-    await sleep(300);
+    await sleep(200);
     getBuyData(dat.attributes.inscode);
   }
 }
@@ -486,8 +486,8 @@ async function getBuyData(code){
 
 async function getAllMabnaDatas(source)
 {
-  await sleep(300);
   for (let dat of source) {
+    await sleep(200);
     getMabnaData(dat.attributes.inscode);
   }
 }
@@ -546,7 +546,7 @@ async function getMabnaData(code){
 async function getAllDatas(source)
 {
   for (let dat of source) {
-    await sleep(300);
+    await sleep(200);
     getData(dat.attributes.inscode);
   }
 }
