@@ -861,69 +861,69 @@ async function getAllMainData() {
 
 async function main() {
   // await getAllMainData()
-  // setInterval(() => {
-  //   catchGroups();
-  // }, 24 * 60 * 60 * 1000);
-  // setInterval(async () => {
-  //   let currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if(h > 15 && h <16) 
-  //   {
-  //   const resSource = await fetch(
-  //       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-  //     );
+  setInterval(() => {
+    catchGroups();
+  }, 24 * 60 * 60 * 1000);
+  setInterval(async () => {
+    let currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 15 && h <16) 
+    {
+    const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
     
-  //     let source = await resSource.json();
-  //     source = source.data;
-  //     await getAllStateDatas(source);
-  //     delete(source);
-  //     delete(resSource);
-  //   }
-  //   delete(currentdate);
-  //   delete(h);
-  // },  60 * 60 * 1000);
-  // setInterval(async () => {
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if(h > 17 && h <18) 
-  //   {
-  //   const resSource = await fetch(
-  //       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-  //     );
+      let source = await resSource.json();
+      source = source.data;
+      await getAllStateDatas(source);
+      delete(source);
+      delete(resSource);
+    }
+    delete(currentdate);
+    delete(h);
+  },  60 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 17 && h <18) 
+    {
+    const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
     
-  //     let source = await resSource.json();
-  //     source = source.data;
-  //   await getAllMainStateDatas(source);
-  //     delete(source);
-  //     delete(resSource);
-  //   }
-  //   delete(currentdate);
-  //   delete(h);
-  // },  60 * 60 * 1000);
-  // setInterval(async () => {
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if(h > 19 && h <20) 
-  //   {
-  //   const resSource = await fetch(
-  //     `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-  //   );
+      let source = await resSource.json();
+      source = source.data;
+    await getAllMainStateDatas(source);
+      delete(source);
+      delete(resSource);
+    }
+    delete(currentdate);
+    delete(h);
+  },  60 * 60 * 1000);
+  setInterval(async () => {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if(h > 19 && h <20) 
+    {
+    const resSource = await fetch(
+      `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+    );
   
-  //   let source = await resSource.json();
-  //   source = source.data;
-  //   await getAllSellDatas(source);
-  //     delete(source);
-  //     delete(resSource);
-  //   }
-  //   delete(currentdate);
-  //   delete(h);
-  // },  60 * 60 * 1000);
-  // while(true)
-  // {
-  //   let  currentdate = new Date();
-  //   let h = currentdate.getHours();
-  //   if (h < 12 && h > 8){
-      // await catchGroups();
+    let source = await resSource.json();
+    source = source.data;
+    await getAllSellDatas(source);
+      delete(source);
+      delete(resSource);
+    }
+    delete(currentdate);
+    delete(h);
+  },  60 * 60 * 1000);
+  while(true)
+  {
+    let  currentdate = new Date();
+    let h = currentdate.getHours();
+    if (h < 12 && h > 8){
+      await catchGroups();
       await getFirstPage();
       await sleep(2000);
       await getBestlimits();
@@ -932,15 +932,15 @@ async function main() {
       await sleep(2000);
       await getAllMainData();
       await sleep(5000);
-      // delete(currentdate);
-      // delete(h);
-    // }
-  //   else
-  //   {
-  //     delete(currentdate);
-  //     delete(h);
-  //     await sleep(30 * 60 * 1000);
-  //   }
-  // }
+      delete(currentdate);
+      delete(h);
+    }
+    else
+    {
+      delete(currentdate);
+      delete(h);
+      await sleep(30 * 60 * 1000);
+    }
+  }
 }
 main();
