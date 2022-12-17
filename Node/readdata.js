@@ -867,7 +867,7 @@ async function main() {
   setInterval(async () => {
     let currentdate = new Date();
     let h = currentdate.getHours();
-    if(h > 15 && h <16) 
+    if(h >= 15 && h <16) 
     {
     const resSource = await fetch(
         `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
@@ -885,7 +885,7 @@ async function main() {
   setInterval(async () => {
     let  currentdate = new Date();
     let h = currentdate.getHours();
-    if(h > 17 && h <18) 
+    if(h >= 17 && h <18) 
     {
     const resSource = await fetch(
         `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
@@ -903,7 +903,7 @@ async function main() {
   setInterval(async () => {
     let  currentdate = new Date();
     let h = currentdate.getHours();
-    if(h > 19 && h <20) 
+    if(h >= 19 && h <20) 
     {
     const resSource = await fetch(
       `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`

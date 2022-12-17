@@ -11,6 +11,8 @@ import Buy from "../components/borse/name/buy";
 import { useEffect, useState } from "react";
 import SaraneChart from "../components/borse/name/saranechart";
 import HaghighiChart from "../components/borse/name/haghighiChart";
+import Router from 'next/router';
+
 export default function Events({
   nameInfo,
   mainInformation,
@@ -84,27 +86,18 @@ export default function Events({
     </Layout>
   );
 }
-export async function getStaticPaths() {
-  const resDB = await fetch(
-    `${API_URL}/api/companies?pagination[page]=1&pagination[pageSize]=2000`
-  );
-  let source = await resDB.json();
-  let res = source.data;
-  let paths = res.map((evt) => ({
-    params: { name: evt.attributes.inscode },
-  }));
-  if (res.length == 0) {
-    paths = null;
-  }
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params: { name } }) {
+export async function getServerSideProps({ params: { name } }) {
   const resDB = await fetch(
     `${API_URL}/api/companies?filters[inscode]=${name}`
   );
   let nameInfo = await resDB.json();
-
+  if(nameInfo.data.length < 1)
+  {
+    return {
+      notFound: true
+  };
+  }
+  else{
   try {
     const responseMainData = await fetch(
       `${API_URL}/api/maindatas?filters[inscode]=${name}`
@@ -158,7 +151,7 @@ export async function getStaticProps({ params: { name } }) {
     return {
       props: dat,
     };
-  }
+  }}
 }
 
 async function ref(name) {
