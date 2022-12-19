@@ -632,18 +632,18 @@ async function getAllStateDatas(source)
 }
 //get table data
 async function getStateData(code){
-  let webdata = {};
+  let data = {};
   try
   {
   const resweb = await fetch(
     `http://cdn.tsetmc.com/api/ClosingPrice/GetClosingPriceDailyList/${code}/9999`
   );
-  webdata = await resweb.json();
+  data = await resweb.json();
   const res = await fetch(`${API_URL}/statedatas?filters[inscode]=${code}`);
   const DB = await res.json();
   let temp=[];
   let response;
-  let data = webdata.closingPriceDaily;
+  data = data.closingPriceDaily;
   for (let i of data) {
         temp.push({
           payani: i.pClosing,
@@ -703,7 +703,7 @@ async function getAllSellDatas(source)
 }
 //get table data
 async function getSellData(code){
-  let webdata = {};
+  let data;
   try
   {
   const resweb = await fetch(
@@ -715,10 +715,10 @@ async function getSellData(code){
       },
     }
   );
-  webdata = await resweb.json();
+  data = await resweb.json();
   const res = await fetch(`${API_URL}/selldatas?filters[inscode]=${code}`);
   const DB = await res.json();
-  let data = webdata.clientType;
+  data = data.clientType;
   let temp2 = [];
     for (let i of data) {
       temp2.push({
@@ -774,7 +774,7 @@ async function getAllMainStateDatas(source)
 }
 //get table data 
 async function getMainStateData(code){
-  let webdata = {};
+  let data = {};
   try
   {
   const resweb = await fetch(
@@ -785,10 +785,10 @@ async function getMainStateData(code){
     },
   }
   );
-  webdata = await resweb.json();
+  data = await resweb.json();
   const res = await fetch(`${API_URL}/mainstates?filters[inscode]=${code}`);
   const DB = await res.json();
-  let data = webdata.trade;
+  data = data.trade;
   let response;
   let da = [];
   let flag = 1;
@@ -802,7 +802,6 @@ async function getMainStateData(code){
     id = DB.data[0].id;
   }
   delete(DB);
-  delete(webdata);
   delete(resweb);
   delete(res);
   data.reverse();
