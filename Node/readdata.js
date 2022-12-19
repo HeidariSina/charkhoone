@@ -626,7 +626,7 @@ async function getData(code){
 async function getAllStateDatas(source)
 {
   for (let dat of source) {
-    await sleep(2100);
+    await sleep(2500);
     getStateData(dat.attributes.inscode);
   }
 }
@@ -697,7 +697,7 @@ async function getStateData(code){
 async function getAllSellDatas(source)
 {
   for (let dat of source) {
-    await sleep(2000);
+    await sleep(2500);
     getSellData(dat.attributes.inscode);
   }
 }
@@ -768,7 +768,7 @@ async function getSellData(code){
 async function getAllMainStateDatas(source)
 {
   for (let dat of source) {
-    await sleep(2000);
+    await sleep(2500);
     getMainStateData(dat.attributes.inscode);
   }
 }
@@ -873,7 +873,9 @@ async function main() {
   while(true)
   {
     let  currentdate = new Date();
+    currentdate = new Date(currentdate.getTime() + 3 * 1000 * 60 * 60 + 1000 * 60 * 30);
     let h = currentdate.getHours();
+
     if (h < 12 && h > 8){
       await catchGroups();
       await getFirstPage();
