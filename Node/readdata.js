@@ -790,12 +790,28 @@ async function getMainStateData(code){
   const DB = await res.json();
   let data = webdata.trade;
   let response;
-  let da = []
+  let da = [];
+  let flag = 1;
+  let id ;
+  if (DB.data.length < 1)
+  {
+    flag = 0;
+  }
+  else
+  {
+    id = DB.data[0].id;
+  }
+  delete(DB);
+  delete(webdata);
+  delete(resweb);
+  delete(res);
   data.reverse();
   data.map((el) => {
       da.push({ qTitTran: el.qTitTran, pTran: el.pTran, hEven: el.hEven });
   });
   data = da;
+  delete(da);
+
   data.reverse();
   let body = {
     data: {
@@ -805,14 +821,14 @@ async function getMainStateData(code){
       },
     },
   };
-  if (DB.data.length < 1) {
+  if (flag = 1) {
     response = await fetch(`${API_URL}/mainstates`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } else {
-    response = await fetch(`${API_URL}/mainstates/${DB.data[0].id}`, {
+    response = await fetch(`${API_URL}/mainstates/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -820,11 +836,6 @@ async function getMainStateData(code){
   }
   delete(response);
   delete(body);
-  delete(DB);
-  delete(webdata);
-  delete(resweb);
-  delete(res);
-  delete(da);
   delete(data);
 }catch (error) {
     setTimeout(() => {
@@ -860,16 +871,51 @@ async function getAllMainData() {
 }
 
 async function main() {
-  // await getAllMainData()
-  setInterval(() => {
-    catchGroups();
-  }, 24 * 60 * 60 * 1000);
-  setInterval(async () => {
-    let currentdate = new Date();
+  while(true)
+  {
+    let  currentdate = new Date();
     let h = currentdate.getHours();
-    if(h >= 15 && h <16) 
+    if (h < 12 && h > 8){
+      await catchGroups();
+      await getFirstPage();
+      await sleep(1000);
+      await getBestlimits();
+      await sleep(1000);
+      await sendAllCompaniesToDB();
+      await sleep(1000);
+      getAllMainData();
+      await sleep( 3 * 60 * 1000);
+    }
+    else if (h >= 20 && h <21)
     {
-    const resSource = await fetch(
+      const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
+    
+      let source = await resSource.json();
+      source = source.data;
+      await getAllSellDatas(source);
+      delete(source);
+      delete(resSource);
+      await sleep(1000 * 60 * 30)
+    }
+    else if(h >= 17 && h <18)
+    {
+      const resSource = await fetch(
+        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
+      );
+    
+      let source = await resSource.json();
+      source = source.data;
+      await getAllMainStateDatas(source);
+      delete(source);
+      delete(resSource);
+      await sleep(1000 * 60 * 30)
+
+    }
+    else if(h >= 14 && h <15)
+    {
+      const resSource = await fetch(
         `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
       );
     
@@ -878,62 +924,7 @@ async function main() {
       await getAllStateDatas(source);
       delete(source);
       delete(resSource);
-    }
-    delete(currentdate);
-    delete(h);
-  },  60 * 60 * 1000);
-  setInterval(async () => {
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if(h >= 17 && h <18) 
-    {
-    const resSource = await fetch(
-        `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-      );
-    
-      let source = await resSource.json();
-      source = source.data;
-    await getAllMainStateDatas(source);
-      delete(source);
-      delete(resSource);
-    }
-    delete(currentdate);
-    delete(h);
-  },  60 * 60 * 1000);
-  setInterval(async () => {
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if(h >= 19 && h <20) 
-    {
-    const resSource = await fetch(
-      `${API_URL}/companies?pagination[page]=1&pagination[pageSize]=2000`
-    );
-  
-    let source = await resSource.json();
-    source = source.data;
-    await getAllSellDatas(source);
-      delete(source);
-      delete(resSource);
-    }
-    delete(currentdate);
-    delete(h);
-  },  60 * 60 * 1000);
-  while(true)
-  {
-    let  currentdate = new Date();
-    let h = currentdate.getHours();
-    if (h < 12 && h > 8){
-      await catchGroups();
-      await getFirstPage();
-      await sleep(2000);
-      await getBestlimits();
-      await sleep(2000);
-      await sendAllCompaniesToDB();
-      await sleep(2000);
-      await getAllMainData();
-      await sleep(5000);
-      delete(currentdate);
-      delete(h);
+      await sleep(1000 * 60 * 30)
     }
     else
     {
@@ -941,6 +932,8 @@ async function main() {
       delete(h);
       await sleep(30 * 60 * 1000);
     }
+    delete(currentdate);
+    delete(h);
   }
 }
 main();
