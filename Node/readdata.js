@@ -875,8 +875,9 @@ async function main() {
     let  currentdate = new Date();
     currentdate = new Date(currentdate.getTime() + 3 * 1000 * 60 * 60 + 1000 * 60 * 30);
     let h = currentdate.getHours();
+    let m = currentdate.getMinutes();
 
-    if (h < 13 && h > 8){
+    if ((h < 12 && h > 8) || (h == 12 && m < 10)){
       await catchGroups();
       await getFirstPage();
       await sleep(1000);
@@ -939,7 +940,6 @@ async function main() {
   }
   return 0;
 }
-main();
 let flag = 0;
 while(true)
 {
