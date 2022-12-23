@@ -870,7 +870,8 @@ async function getAllMainData() {
 }
 
 async function main() {
-  while(true)
+  let t = true;
+  while(t)
   {
     let  currentdate = new Date();
     currentdate = new Date(currentdate.getTime() + 3 * 1000 * 60 * 60 + 1000 * 60 * 30);
@@ -928,7 +929,7 @@ async function main() {
       delete(resSource);
       await sleep(1000 * 60 * 30)
     }
-    else if (h == 23){break;}
+    else if (h == 23){t = false;}
     else
     {
       delete(currentdate);
