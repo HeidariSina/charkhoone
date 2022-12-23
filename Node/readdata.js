@@ -348,7 +348,7 @@ async function getBestlimits() {
 async function getAllTableDatas(source)
 {
   for (let dat of source) {
-    await sleep(150);
+    await sleep(210);
     getTableData(dat.attributes.inscode);
   }
 }
@@ -404,7 +404,7 @@ async function getTableData(code)
 async function getAllBuyDatas(source)
 {
   for (let dat of source) {
-    await sleep(150);
+    await sleep(210);
     getBuyData(dat.attributes.inscode);
   }
 }
@@ -487,7 +487,7 @@ async function getBuyData(code){
 async function getAllMabnaDatas(source)
 {
   for (let dat of source) {
-    await sleep(150);
+    await sleep(210);
     getMabnaData(dat.attributes.inscode);
   }
 }
@@ -546,7 +546,7 @@ async function getMabnaData(code){
 async function getAllDatas(source)
 {
   for (let dat of source) {
-    await sleep(150);
+    await sleep(210);
     getData(dat.attributes.inscode);
   }
 }
@@ -876,7 +876,7 @@ async function main() {
     currentdate = new Date(currentdate.getTime() + 3 * 1000 * 60 * 60 + 1000 * 60 * 30);
     let h = currentdate.getHours();
 
-    if (h < 12 && h > 8){
+    if (h < 13 && h > 8){
       await catchGroups();
       await getFirstPage();
       await sleep(1000);
@@ -927,6 +927,7 @@ async function main() {
       delete(resSource);
       await sleep(1000 * 60 * 30)
     }
+    else if (h == 23){break;}
     else
     {
       delete(currentdate);
@@ -936,5 +937,22 @@ async function main() {
     delete(currentdate);
     delete(h);
   }
+  return 0;
 }
 main();
+let flag = 0;
+while(true)
+{
+  let  currentdate = new Date();
+  currentdate = new Date(currentdate.getTime() + 3 * 1000 * 60 * 60 + 1000 * 60 * 30);
+  let h = currentdate.getHours();
+  if (h == 6)
+  {
+    flag = 0;
+  }
+  if (h == 7 && flag == 0)
+  {
+    main();
+  }
+  await sleep(1000 * 60 * 30);
+}
