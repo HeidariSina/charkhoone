@@ -878,7 +878,7 @@ async function main() {
     let h = currentdate.getHours();
     let m = currentdate.getMinutes();
 
-    if ((h < 12 && h > 8) || (h == 12 && m < 10)){
+    if (h < 13 && h > 8){
       await catchGroups();
       await getFirstPage();
       await sleep(1000);
